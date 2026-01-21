@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payroll Pro — Employee</title>
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">Payroll Pro</div>
+      <span class="role">Employee</span>
+    </div>
+
+    <div class="sidebar-menu">
+      <a href="#" class="menu-item active">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-file-invoice-dollar"></i> Payslips
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-umbrella-beach"></i> Leave
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-calendar-alt"></i> Attendance
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-user"></i> Profile
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-bell"></i> Notifications
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <span class="user-name">Employee</span>
+        <span class="user-role">Employee</span>
+      </div>
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header class="top-header">
+      <div class="header-left">
+        <h1>Employee Dashboard</h1>
+        <p>View your salary, leaves, attendance, and personal details.</p>
+      </div>
+      <div class="header-right">
+        <div class="user-badge">
+          <span class="user-initials">E</span>
+          <div class="user-info">
+            <span class="user-name">Employee</span>
+            <span class="user-role">Employee</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon slip-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+          <div class="stat-info">
+            <h3>Latest Payslip</h3>
+            <p>View, download, and print your latest salary slip</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon leave-icon"><i class="fas fa-umbrella-beach"></i></div>
+          <div class="stat-info">
+            <h3>Leave Balance</h3>
+            <p>View your available leaves and apply for leave</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon att-icon"><i class="fas fa-calendar-alt"></i></div>
+          <div class="stat-info">
+            <h3>Attendance</h3>
+            <p>View your attendance for current month</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon profile-icon"><i class="fas fa-user"></i></div>
+          <div class="stat-info">
+            <h3>Profile</h3>
+            <p>Update personal, contact, and bank details</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="actions-grid">
+          <button class="action-btn">View Payslip</button>
+          <button class="action-btn">Download Payslip</button>
+          <button class="action-btn">Apply for Leave</button>
+          <button class="action-btn">View Leave Status</button>
+          <button class="action-btn">Update Profile</button>
+          <button class="action-btn">View Notifications</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-message" class="toast hidden"></div>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payroll Pro — HR Admin</title>
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">Payroll Pro</div>
+      <span class="role">HR Admin</span>
+    </div>
+
+    <div class="sidebar-menu">
+      <a href="#" class="menu-item active">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-users"></i> Employees
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-calendar-alt"></i> Attendance
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-umbrella-beach"></i> Leave Management
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-file-alt"></i> HR Reports
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-file-contract"></i> Documents & Policies
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <span class="user-name">HR Admin</span>
+        <span class="user-role">HR Admin</span>
+      </div>
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header class="top-header">
+      <div class="header-left">
+        <h1>HR Admin Dashboard</h1>
+        <p>Manage employees, attendance, leave, and HR policies.</p>
+      </div>
+      <div class="header-right">
+        <div class="user-badge">
+          <span class="user-initials">HR</span>
+          <div class="user-info">
+            <span class="user-name">HR Admin</span>
+            <span class="user-role">HR Admin</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon emp-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-info">
+            <h3>Employees</h3>
+            <p>Add, update, view employees and their profiles</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon att-icon"><i class="fas fa-calendar-alt"></i></div>
+          <div class="stat-info">
+            <h3>Attendance</h3>
+            <p>Manage attendance, sanctions, and attendance reports</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon leave-icon"><i class="fas fa-umbrella-beach"></i></div>
+          <div class="stat-info">
+            <h3>Leave Management</h3>
+            <p>Manage leaves, balance, encashment, and approvals</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon doc-icon"><i class="fas fa-file-contract"></i></div>
+          <div class="stat-info">
+            <h3>Documents & Policies</h3>
+            <p>Upload, manage, and distribute company policies</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="actions-grid">
+          <button class="action-btn">Add New Employee</button>
+          <button class="action-btn">Update Attendance</button>
+          <button class="action-btn">Approve Leaves</button>
+          <button class="action-btn">View HR Reports</button>
+          <button class="action-btn">Upload Policy</button>
+          <button class="action-btn">Send Notifications</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-message" class="toast hidden"></div>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>
+

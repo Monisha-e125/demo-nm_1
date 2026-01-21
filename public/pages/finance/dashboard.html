@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payroll Pro — Finance</title>
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">Payroll Pro</div>
+      <span class="role">Finance</span>
+    </div>
+
+    <div class="sidebar-menu">
+      <a href="#" class="menu-item active">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-file-invoice-dollar"></i> Salary Payments
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-chart-bar"></i> Payroll Reports
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-money-check-alt"></i> Bank Reconciliation
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-file-alt"></i> Statutory Payments
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-cash-register"></i> Payment History
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <span class="user-name">Finance</span>
+        <span class="user-role">Finance</span>
+      </div>
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header class="top-header">
+      <div class="header-left">
+        <h1>Finance Dashboard</h1>
+        <p>Verify payroll payments, statutory liabilities, and reconciliation.</p>
+      </div>
+      <div class="header-right">
+        <div class="user-badge">
+          <span class="user-initials">F</span>
+          <div class="user-info">
+            <span class="user-name">Finance</span>
+            <span class="user-role">Finance</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon salary-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+          <div class="stat-info">
+            <h3>Salary Payments</h3>
+            <p>Verify and approve salary outflows and bank files
