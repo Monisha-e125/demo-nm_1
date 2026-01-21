@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Statutory - FULLY WORKING</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+* {margin:0;padding:0;box-sizing:border-box;}
+body {font-family:Arial,sans-serif;background:#f5f7fa;display:flex;min-height:100vh;}
+.sidebar {width:260px;background:#0f294d;color:white;padding:25px;position:fixed;height:100vh;overflow:auto;}
+.logo {font-size:28px;font-weight:bold;margin-bottom:30px;color:#60a5fa;}
+.menu-item {display:flex;align-items:center;padding:15px;color:#bfdbfe;text-decoration:none;margin:8px 0;border-radius:8px;transition:0.3s;}
+.menu-item:hover,.menu-item.active {background:#1e40af;color:white;}
+.main-content {margin-left:260px;padding:30px;flex:1;}
+.page-header {background:white;padding:30px;border-radius:16px;margin-bottom:30px;box-shadow:0 4px 20px rgba(0,0,0,0.1);}
+h1 {color:#1f2937;font-size:32px;margin-bottom:10px;}
+.stat-card {background:white;padding:30px;border-radius:16px;margin-bottom:25px;box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.stat-row {display:flex;gap:20px;align-items:center;margin-bottom:20px;padding:15px;background:#f8fafc;border-radius:12px;}
+.stat-label {font-weight:600;color:#374151;min-width:180px;}
+.input-group {display:flex;gap:10px;align-items:center;}
+.input-field {width:100px;padding:10px;border:2px solid #3b82f6;border-radius:8px;font-weight:600;font-size:16px;text-align:center;}
+.input-field:focus {outline:none;border-color:#1d4ed8;box-shadow:0 0 0 3px rgba(59,130,246,0.1);}
+.save-btn {padding:15px 35px;background:#10b981;color:white;border:none;border-radius:12px;cursor:pointer;font-weight:600;font-size:16px;transition:0.3s;margin:20px 0;}
+.save-btn:hover {background:#059669;transform:translateY(-2px);}
+.status {padding:12px 20px;border-radius:8px;margin:15px 0;font-weight:600;}
+.status.success {background:#d1fae5;color:#065f46;}
+.status.error {background:#fee2e2;color:#991b1b;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="logo">Payroll Pro</div>
+  <a href="dashboard.html" class="menu-item"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+  <a href="#" class="menu-item active"><i class="fas fa-gavel"></i> Statutory Rules</a>
+</div>
+
+<div class="main-content">
+  <div class="page-header">
+    <h1><i class="fas fa-gavel"></i> Statutory Rules</h1>
+    <p>Change → Save → Refresh → Values STAY</p>
+  </div>
+
+  <div class="stat-card">
+    <h2><i class="fas fa-university"></i> PF Configuration</h2>
+    <div class="stat-row">
+      <div class="stat-label">Employee PF</div>
+      <div class="input-group">
+        <input type="number" id="pf-emp" value="12" min="0" max="20" step="0.1" class="input-field">
+        <span>% Basic</span>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-label">Employer PF</div>
+      <div class="input-group">
+        <input type="number" id="pf-er" value="12" min="0" max="20" step="0.1" class="input-field">
+        <span>% Basic</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <h2><i class="fas fa-heartbeat"></i> ESI Configuration</h2>
+    <div class="stat-row">
+      <div class="stat-label">Employee ESI</div>
+      <div class="input-group">
+        <input type="number" id="esi-emp" value="0.75" min="0" max="5" step="0.01" class="input-field">
+        <span>% Gross</span>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-label">Employer ESI</div>
+      <div class="input-group">
+        <input type="number" id="esi-er" value="3.25" min="0" max="5" step="0.01" class="input-field">
+        <span>% Gross</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="status" class="status" style="display:none;"></div>
+  
+  <div style="text-align:center;padding:40px;background:white;border-radius:16px;margin:30px 0;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+    <button class="save-btn" onclick="saveAll()">
+      <i class="fas fa-save"></i> SAVE ALL CHANGES
+    </button>
+    <p style="margin-top:15px;color:#6b7280;">Values persist on refresh ✓ Console logs ✓</p>
+  </div>
+</div>
+
+<script>
+// 🔥 FIXED: Load from localStorage FIRST (before setting defaults)
+let config = {
+  pf: { employee: 12, employer: 12 },
+  esi: { employee: 0.75, employer: 3.25 }
+};
+
+// ✅ STEP 1: Load saved values on page load
+function loadConfig() {
+  const saved = localStorage.getItem('statutoryConfig');
+  if (saved) {
+    config = JSON.parse(saved);
+    console.log('📂 LOADED FROM LOCALSTORAGE:', config);
+  } else {
+    console.log('🆕 No saved config - using defaults');
+  }
+  
+  // Apply to inputs
+  document.getElementById('pf-emp').value = config.pf.employee;
+  document.getElementById('pf-er').value = config.pf.employer;
+  document.getElementById('esi-emp').value = config.esi.employee;
+  document.getElementById('esi-er').value = config.esi.employer;
+  
+  console.log('✅ VALUES LOADED TO INPUTS:', config);
+}
+
+// ✅ STEP 2: Save function
+function saveAll() {
+  console.log('🚀 SAVE CLICKED!');
+  
+  const saveBtn = document.querySelector('.save-btn');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SAVING...';
+  
+  // Get current input values
+  config.pf.employee = parseFloat(document.getElementById('pf-emp').value) || 12;
+  config.pf.employer = parseFloat(document.getElementById('pf-er').value) || 12;
+  config.esi.employee = parseFloat(document.getElementById('esi-emp').value) || 0.75;
+  config.esi.employer = parseFloat(document.getElementById('esi-er').value) || 3.25;
+  
+  console.log('📝 NEW VALUES CAPTURED:', config);
+  
+  // Save to localStorage
+  localStorage.setItem('statutoryConfig', JSON.stringify(config));
+  console.log('💾 SAVED TO LOCALSTORAGE!');
+  
+  showStatus('✅ SAVED SUCCESSFULLY!<br>PF Employee: ' + config.pf.employee + '%<br>PF Employer: ' + config.pf.employer + '%', 'success');
+  
+  setTimeout(() => {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = '<i class="fas fa-save"></i> SAVE ALL CHANGES';
+  }, 1500);
+}
+
+// ✅ STEP 3: Status display
+function showStatus(message, type) {
+  const status = document.getElementById('status');
+  status.innerHTML = message;
+  status.className = `status ${type}`;
+  status.style.display = 'block';
+  setTimeout(() => status.style.display = 'none', 5000);
+}
+
+// 🔥 EXECUTE ON PAGE LOAD
+console.log('🔥 PAGE LOADED');
+loadConfig();
+
+// Auto-log changes
+document.querySelectorAll('.input-field').forEach(input => {
+  input.addEventListener('input', function() {
+    console.log('✏️ CHANGED:', this.id, '=', this.value);
+  });
+});
+</script>
+</body>
+</html>
