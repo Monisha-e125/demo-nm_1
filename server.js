@@ -1,4 +1,5 @@
 
+const payrollProfileRoutes = require('./routes/payrollProfileRoutes');
 
 require('dotenv').config();
 const express = require('express');
@@ -14,6 +15,7 @@ const employeeRoutes = require('./routes/roleRoutes/employee');
 const financeRoutes = require('./routes/roleRoutes/finance');
 
 const app = express();
+app.use('/api/payroll-profiles', payrollProfileRoutes);
 
 // Health check
 
