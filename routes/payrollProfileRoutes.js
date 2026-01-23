@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+
 const PayrollProfile = require('../models/PayrollProfile');
 const Employee = require('../models/Employee');
-const auth = require('../middleware/auth');
+const { auth } = require('../middlewares/auth');
+
 
 /**
  * CREATE Payroll Profile

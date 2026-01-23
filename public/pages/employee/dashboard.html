@@ -4,9 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payroll Pro — Employee</title>
-  <link rel="stylesheet" href="../css/dashboard.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <!-- Main Dashboard CSS -->
+  <link rel="stylesheet" href="/css/dashboard.css">
+
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
 </head>
+
 <body>
   <!-- Sidebar -->
   <div class="sidebar">
@@ -17,22 +25,33 @@
 
     <div class="sidebar-menu">
       <a href="#" class="menu-item active">
-        <i class="fas fa-tachometer-alt"></i> Dashboard
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
       </a>
+
       <a href="#" class="menu-item">
-        <i class="fas fa-file-invoice-dollar"></i> Payslips
+        <i class="fas fa-file-invoice-dollar"></i>
+        <span>Payslips</span>
       </a>
+
       <a href="#" class="menu-item">
-        <i class="fas fa-umbrella-beach"></i> Leave
+        <i class="fas fa-umbrella-beach"></i>
+        <span>Leave</span>
       </a>
+
       <a href="#" class="menu-item">
-        <i class="fas fa-calendar-alt"></i> Attendance
+        <i class="fas fa-calendar-alt"></i>
+        <span>Attendance</span>
       </a>
+
       <a href="#" class="menu-item">
-        <i class="fas fa-user"></i> Profile
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
       </a>
+
       <a href="#" class="menu-item">
-        <i class="fas fa-bell"></i> Notifications
+        <i class="fas fa-bell"></i>
+        <span>Notifications</span>
       </a>
     </div>
 
@@ -41,6 +60,7 @@
         <span class="user-name">Employee</span>
         <span class="user-role">Employee</span>
       </div>
+
       <button id="logoutBtn" class="logout-btn">
         <i class="fas fa-sign-out-alt"></i> Logout
       </button>
@@ -54,6 +74,7 @@
         <h1>Employee Dashboard</h1>
         <p>View your salary, leaves, attendance, and personal details.</p>
       </div>
+
       <div class="header-right">
         <div class="user-badge">
           <span class="user-initials">E</span>
@@ -66,52 +87,68 @@
     </header>
 
     <div class="content">
+      <!-- Stats -->
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-icon slip-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+          <div class="stat-icon slip-icon">
+            <i class="fas fa-file-invoice-dollar"></i>
+          </div>
           <div class="stat-info">
             <h3>Latest Payslip</h3>
-            <p>View, download, and print your latest salary slip</p>
+            <p>View and download your latest salary slip</p>
           </div>
         </div>
+
         <div class="stat-card">
-          <div class="stat-icon leave-icon"><i class="fas fa-umbrella-beach"></i></div>
+          <div class="stat-icon leave-icon">
+            <i class="fas fa-umbrella-beach"></i>
+          </div>
           <div class="stat-info">
             <h3>Leave Balance</h3>
-            <p>View your available leaves and apply for leave</p>
+            <p>Check and apply for leave</p>
           </div>
         </div>
+
         <div class="stat-card">
-          <div class="stat-icon att-icon"><i class="fas fa-calendar-alt"></i></div>
+          <div class="stat-icon att-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
           <div class="stat-info">
             <h3>Attendance</h3>
-            <p>View your attendance for current month</p>
+            <p>Monthly attendance overview</p>
           </div>
         </div>
+
         <div class="stat-card">
-          <div class="stat-icon profile-icon"><i class="fas fa-user"></i></div>
+          <div class="stat-icon profile-icon">
+            <i class="fas fa-user"></i>
+          </div>
           <div class="stat-info">
             <h3>Profile</h3>
-            <p>Update personal, contact, and bank details</p>
+            <p>Update personal and bank details</p>
           </div>
         </div>
       </div>
 
+      <!-- Quick Actions -->
       <div class="quick-actions">
         <h2>Quick Actions</h2>
         <div class="actions-grid">
           <button class="action-btn">View Payslip</button>
           <button class="action-btn">Download Payslip</button>
-          <button class="action-btn">Apply for Leave</button>
-          <button class="action-btn">View Leave Status</button>
+          <button class="action-btn">Apply Leave</button>
+          <button class="action-btn">Leave Status</button>
           <button class="action-btn">Update Profile</button>
-          <button class="action-btn">View Notifications</button>
+          <button class="action-btn">Notifications</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Toast -->
   <div id="toast-message" class="toast hidden"></div>
-  <script src="../js/dashboard.js"></script>
+
+  <!-- Common Dashboard JS -->
+  <script src="/js/dashboard.js"></script>
 </body>
 </html>

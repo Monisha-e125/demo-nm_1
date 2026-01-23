@@ -40,13 +40,13 @@ const testUsers = [
 async function createAllTestUsers() {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log('✅ Connected to MongoDB');
+    console.log('Connected to MongoDB');
 
     const collection = mongoose.connection.db.collection('users');
     
     // Delete all existing test users
     await collection.deleteMany({ email: { $in: testUsers.map(u => u.email) } });
-    console.log('🗑️  Cleared existing test users');
+    console.log('Cleared existing test users');
 
     // Hash password (same for all)
     const hashedPassword = await bcrypt.hash('password123', 10);
@@ -63,17 +63,17 @@ async function createAllTestUsers() {
     
 
     await User.insertMany(users);
-    console.log('✅ All 5 test users created!');
+    console.log('All 5 test users created!');
 
-    console.log('\n📋 Login Details:');
+    console.log('\nLogin Details:');
     testUsers.forEach(user => {
-      console.log(`👤 ${user.role.padEnd(14)} → ${user.email} / ${user.password}`);
+      console.log(`${user.role.padEnd(14)} → ${user.email} / ${user.password}`);
     });
 
-    console.log('\n✅ Test any role by logging in!');
+    console.log('\nTest any role by logging in!');
     await mongoose.disconnect();
   } catch (err) {
-    console.error('❌ Error:', err.message);
+    console.error('Error:', err.message);
   }
 }
 

@@ -1,32 +1,76 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
 
-const requireAuth = async (req, res, next) => {
+/**
+ * requireAuth
+ * Any logged-in user
+ */
+const requireAuth = (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'Access denied. No token provided.' });
+    const authHeader = req.headers.authorization;
 
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Authorization token missing' });
+    }
+
+    const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id).select('-password');
-    if (!user || !user.isActive) return res.status(401).json({ error: 'Invalid token or user is inactive.' });
 
-    req.user = user;
+    req.user = decoded;
     next();
   } catch (err) {
-    if (err.name === 'JsonWebTokenError') return res.status(401).json({ error: 'Invalid token.' });
-    if (err.name === 'TokenExpiredError') return res.status(401).json({ error: 'Token expired.' });
-    res.status(500).json({ error: 'Server error in authentication.' });
+    return res.status(401).json({ error: 'Invalid or expired token' });
   }
 };
 
-const requireRole = (allowedRoles) => {
+/**
+ *  requireRole
+ * Example: requireRole(['Super Admin'])
+ */
+const requireRole = (roles = []) => {
   return (req, res, next) => {
-    const userRole = req.user?.role;
-    if (!userRole || !allowedRoles.includes(userRole)) {
-      return res.status(403).json({ error: `Access denied. Role must be one of: ${allowedRoles.join(', ')}` });
+    if (!req.user) {
+      return res.status(401).json({ error: 'User not authenticated' });
     }
+
+    if (roles.length && !roles.includes(req.user.role)) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
     next();
   };
 };
 
-module.exports = { requireAuth, requireRole };
+/**
+ * auth (combined auth + role)
+ * Used in Module 3 routes
+ */
+const auth = (roles = []) => {
+  return (req, res, next) => {
+    try {
+      const authHeader = req.headers.authorization;
+
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'Authorization token missing' });
+      }
+
+      const token = authHeader.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      req.user = decoded;
+
+      if (roles.length && !roles.includes(decoded.role)) {
+        return res.status(403).json({ error: 'Access denied' });
+      }
+
+      next();
+    } catch (err) {
+      return res.status(401).json({ error: 'Invalid or expired token' });
+    }
+  };
+};
+
+module.exports = {
+  requireAuth,
+  requireRole,
+  auth
+};

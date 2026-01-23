@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payroll Profile - HR Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/css/dashboard.css">
+
+  <style>
+    .form-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #1f2937;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .section-title {
+      grid-column: span 2;
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    .actions {
+      margin-top: 30px;
+      text-align: right;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1e40af;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-content">
+
+  <div class="form-card">
+    <h2>Employee Payroll Profile</h2>
+
+    <form id="payrollForm">
+
+      <div class="form-grid">
+
+        <!-- EMPLOYEE -->
+        <div class="section-title">Employee</div>
+
+        <div class="form-group">
+          <label>Employee ID</label>
+          <input type="text" id="employeeId" placeholder="MongoDB Employee ID" required>
+        </div>
+
+        <div></div>
+
+        <!-- SALARY -->
+        <div class="section-title">Salary Structure</div>
+
+        <div class="form-group">
+          <label>Basic Salary</label>
+          <input type="number" id="basic" required>
+        </div>
+
+        <div class="form-group">
+          <label>HRA</label>
+          <input type="number" id="hra">
+        </div>
+
+        <div class="form-group">
+          <label>Allowance</label>
+          <input type="number" id="allowance">
+        </div>
+
+        <div></div>
+
+        <!-- BANK -->
+        <div class="section-title">Bank Details</div>
+
+        <div class="form-group">
+          <label>Bank Name</label>
+          <input type="text" id="bankName" required>
+        </div>
+
+        <div class="form-group">
+          <label>Account Number</label>
+          <input type="text" id="accountNumber" required>
+        </div>
+
+        <div class="form-group">
+          <label>IFSC Code</label>
+          <input type="text" id="ifscCode" required>
+        </div>
+
+        <div></div>
+
+        <!-- TAX -->
+        <div class="section-title">Tax Details</div>
+
+        <div class="form-group">
+          <label>Tax Regime</label>
+          <select id="taxRegime">
+            <option value="NEW">New Regime</option>
+            <option value="OLD">Old Regime</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>PAN Number</label>
+          <input type="text" id="panNumber">
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button type="submit">Save Payroll Profile</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+<script src="/js/payroll-profile.js"></script>
+</body>
+</html>

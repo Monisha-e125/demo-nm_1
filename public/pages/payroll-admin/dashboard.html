@@ -1,45 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payroll Pro — Payroll Admin</title>
-  <link rel="stylesheet" href="../../css/dashboard.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payroll Pro - Payroll Admin</title>
+
+  <!-- IMPORTANT: absolute paths -->
+ <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+ <link rel="stylesheet" href="/css/dashboard.css" />
+
 </head>
 <body>
+
+  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sidebar-header">
       <div class="logo">Payroll Pro</div>
       <span class="role">Payroll Admin</span>
     </div>
+
     <div class="sidebar-menu">
-      <a href="#" class="menu-item active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="#" class="menu-item"><i class="fas fa-calculator"></i> Payroll Processing</a>
-      <a href="#" class="menu-item"><i class="fas fa-file-invoice-dollar"></i> Salary Slips</a>
+      <a href="/pages/payroll-admin/dashboard.html" class="menu-item active">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </a>
+
+      <a href="/pages/payroll-admin/process-payroll.html" class="menu-item">
+        <i class="fas fa-calculator"></i> Payroll Processing
+      </a>
+
+      <a href="#" class="menu-item">
+        <i class="fas fa-file-invoice-dollar"></i> Salary Slips
+      </a>
     </div>
+
     <div class="sidebar-footer">
       <div class="user-info">
         <span class="user-name">Payroll Admin</span>
         <span class="user-role">Payroll Admin</span>
       </div>
-      <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
     </div>
   </div>
 
+  <!-- MAIN CONTENT -->
   <div class="main-content">
     <header class="top-header">
       <div class="header-left">
-        <h1>✅ PAYROLL ADMIN DASHBOARD</h1>
+        <h1>Payroll Admin Dashboard</h1>
         <p>Process payroll, generate salary slips, handle payments</p>
       </div>
-      
-    
+    </header>
+
+    <div class="content">
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon statutory-icon">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Process Payroll</h3>
+            <p>Run monthly payroll for employees</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon tax-icon">
+            <i class="fas fa-file-invoice-dollar"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Salary Slips</h3>
+            <p>Generate and download payslips</p>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
-  <div id="toast-message" class="toast hidden"></div>
-  <script src="../../js/dashboard.js"></script>
+  <!-- JS -->
+  <script src="/js/dashboard.js"></script>
 </body>
 </html>
-

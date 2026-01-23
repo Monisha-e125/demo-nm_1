@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Process Payroll</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/payroll.css" />
+</head>
+<body>
+
+  <h1>Payroll Processing</h1>
+
+  <div class="box">
+    <label>Employee ID</label>
+    <input type="text" id="employeeId" placeholder="Employee Mongo ID" />
+
+    <label>Month</label>
+    <input type="month" id="month" />
+
+    <button onclick="processPayroll()">Process Payroll</button>
+  </div>
+
+  <pre id="result"></pre>
+
+  <!-- JS -->
+  <script src="/js/payroll.js"></script>
+</body>
+</html>

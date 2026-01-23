@@ -37,8 +37,10 @@ router.post('/login', async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).json({ error: 'Server error during login.' });
-  }
+  console.error("LOGIN ERROR:", err);   // 👈 add this
+  res.status(500).json({ error: err.message });
+}
+
 });
 
 router.get('/me', requireAuth, (req, res) => {

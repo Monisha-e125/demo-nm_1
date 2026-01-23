@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Payroll Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/css/dashboard.css">
+
+  <style>
+    .profile-card {
+      background: #ffffff;
+      max-width: 900px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #1f2937;
+    }
+
+    .section {
+      margin-top: 25px;
+    }
+
+    .section h3 {
+      margin-bottom: 12px;
+      color: #2563eb;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .info-box {
+      background: #f9fafb;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .label {
+      font-weight: 600;
+      color: #374151;
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-content">
+
+  <div class="profile-card">
+    <h2>My Payroll Profile</h2>
+
+    <!-- EMPLOYEE INFO -->
+    <div class="section">
+      <h3>Employee</h3>
+      <div class="info-grid">
+        <div class="info-box">
+          <span class="label">Employee Name</span>
+          <span id="empName">-</span>
+        </div>
+        <div class="info-box">
+          <span class="label">Email</span>
+          <span id="empEmail">-</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALARY -->
+    <div class="section">
+      <h3>Salary Structure</h3>
+      <div class="info-grid">
+        <div class="info-box">
+          <span class="label">Basic Salary</span>
+          ₹<span id="basic">-</span>
+        </div>
+        <div class="info-box">
+          <span class="label">HRA</span>
+          ₹<span id="hra">-</span>
+        </div>
+        <div class="info-box">
+          <span class="label">Allowance</span>
+          ₹<span id="allowance">-</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BANK -->
+    <div class="section">
+      <h3>Bank Details</h3>
+      <div class="info-grid">
+        <div class="info-box">
+          <span class="label">Bank Name</span>
+          <span id="bankName">-</span>
+        </div>
+        <div class="info-box">
+          <span class="label">Account Number</span>
+          <span id="accountNumber">-</span>
+        </div>
+        <div class="info-box">
+          <span class="label">IFSC Code</span>
+          <span id="ifscCode">-</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAX -->
+    <div class="section">
+      <h3>Tax Details</h3>
+      <div class="info-grid">
+        <div class="info-box">
+          <span class="label">Tax Regime</span>
+          <span id="taxRegime">-</span>
+        </div>
+        <div class="info-box">
+          <span class="label">PAN Number</span>
+          <span id="panNumber">-</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="/js/payroll-profile.js"></script>
+</body>
+</html>

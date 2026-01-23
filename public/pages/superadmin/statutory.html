@@ -87,20 +87,20 @@ h1 {color:#1f2937;font-size:32px;margin-bottom:10px;}
 </div>
 
 <script>
-// 🔥 FIXED: Load from localStorage FIRST (before setting defaults)
+// FIXED: Load from localStorage FIRST (before setting defaults)
 let config = {
   pf: { employee: 12, employer: 12 },
   esi: { employee: 0.75, employer: 3.25 }
 };
 
-// ✅ STEP 1: Load saved values on page load
+// STEP 1: Load saved values on page load
 function loadConfig() {
   const saved = localStorage.getItem('statutoryConfig');
   if (saved) {
     config = JSON.parse(saved);
-    console.log('📂 LOADED FROM LOCALSTORAGE:', config);
+    console.log('LOADED FROM LOCALSTORAGE:', config);
   } else {
-    console.log('🆕 No saved config - using defaults');
+    console.log('No saved config - using defaults');
   }
   
   // Apply to inputs
@@ -109,12 +109,12 @@ function loadConfig() {
   document.getElementById('esi-emp').value = config.esi.employee;
   document.getElementById('esi-er').value = config.esi.employer;
   
-  console.log('✅ VALUES LOADED TO INPUTS:', config);
+  console.log('VALUES LOADED TO INPUTS:', config);
 }
 
-// ✅ STEP 2: Save function
+// STEP 2: Save function
 function saveAll() {
-  console.log('🚀 SAVE CLICKED!');
+  console.log('SAVE CLICKED!');
   
   const saveBtn = document.querySelector('.save-btn');
   saveBtn.disabled = true;
@@ -126,13 +126,13 @@ function saveAll() {
   config.esi.employee = parseFloat(document.getElementById('esi-emp').value) || 0.75;
   config.esi.employer = parseFloat(document.getElementById('esi-er').value) || 3.25;
   
-  console.log('📝 NEW VALUES CAPTURED:', config);
+  console.log('NEW VALUES CAPTURED:', config);
   
   // Save to localStorage
   localStorage.setItem('statutoryConfig', JSON.stringify(config));
-  console.log('💾 SAVED TO LOCALSTORAGE!');
+  console.log('SAVED TO LOCALSTORAGE!');
   
-  showStatus('✅ SAVED SUCCESSFULLY!<br>PF Employee: ' + config.pf.employee + '%<br>PF Employer: ' + config.pf.employer + '%', 'success');
+  showStatus('SAVED SUCCESSFULLY!<br>PF Employee: ' + config.pf.employee + '%<br>PF Employer: ' + config.pf.employer + '%', 'success');
   
   setTimeout(() => {
     saveBtn.disabled = false;
@@ -140,7 +140,7 @@ function saveAll() {
   }, 1500);
 }
 
-// ✅ STEP 3: Status display
+// STEP 3: Status display
 function showStatus(message, type) {
   const status = document.getElementById('status');
   status.innerHTML = message;
@@ -149,14 +149,14 @@ function showStatus(message, type) {
   setTimeout(() => status.style.display = 'none', 5000);
 }
 
-// 🔥 EXECUTE ON PAGE LOAD
-console.log('🔥 PAGE LOADED');
+// EXECUTE ON PAGE LOAD
+console.log('PAGE LOADED');
 loadConfig();
 
 // Auto-log changes
 document.querySelectorAll('.input-field').forEach(input => {
   input.addEventListener('input', function() {
-    console.log('✏️ CHANGED:', this.id, '=', this.value);
+    console.log('CHANGED:', this.id, '=', this.value);
   });
 });
 </script>

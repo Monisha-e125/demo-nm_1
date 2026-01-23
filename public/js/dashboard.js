@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // 🔑 Get current dashboard from URL
+  // Get current dashboard from URL
   const currentPath = window.location.pathname;
   
   // Role-based protection (checks URL + user role)
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // ✅ User has correct role → initialize dashboard
+  // User has correct role → initialize dashboard
   initDashboard();
 
   function initDashboard() {
