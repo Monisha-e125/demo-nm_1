@@ -5,25 +5,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const payrollForm = document.getElementById('payrollForm');
 
-  // ===============================
-  // HR ADMIN: CREATE PAYROLL PROFILE
-  // ===============================
+  /* =================================
+     HR ADMIN: CREATE PAYROLL PROFILE
+     ================================= */
   if (payrollForm) {
     payrollForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      const employeeId = document.getElementById('employeeId').value;
+
       const data = {
-        employeeId: document.getElementById('employeeId').value,
+        employeeId,
+
         salaryStructure: {
           basic: Number(document.getElementById('basic').value),
           hra: Number(document.getElementById('hra').value || 0),
-          allowance: Number(document.getElementById('allowance').value || 0)
+          allowances: Number(document.getElementById('allowance').value || 0)
         },
+
         bankDetails: {
           bankName: document.getElementById('bankName').value,
           accountNumber: document.getElementById('accountNumber').value,
-          ifscCode: document.getElementById('ifscCode').value
+          ifsc: document.getElementById('ifscCode').value
         },
+
         taxDetails: {
           taxRegime: document.getElementById('taxRegime').value,
           panNumber: document.getElementById('panNumber').value
@@ -31,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       try {
-        const res = await fetch('/api/payroll-profiles', {
+        const res = await fetch('/api/payroll-profile', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -46,7 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        alert('Payroll Profile saved successfully ');
+        // Store employeeId for employee view
+        localStorage.setItem('employeeId', employeeId);
+
+        alert('Payroll profile saved successfully');
         payrollForm.reset();
 
       } catch (err) {
@@ -56,13 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===============================
-  // EMPLOYEE / HR: VIEW PAYROLL PROFILE
-  // ===============================
+  /* =================================
+     EMPLOYEE / HR: VIEW PAYROLL PROFILE
+     ================================= */
   const empName = document.getElementById('empName');
 
   if (empName) {
-    // Employee ID should be stored after login (example)
     const employeeId = localStorage.getItem('employeeId');
 
     if (!employeeId) {
@@ -70,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    fetch(`/api/payroll-profiles/${employeeId}`)
+    fetch(`/api/payroll-profile/${employeeId}`)
       .then(res => res.json())
       .then(data => {
         if (data.message) {
@@ -78,24 +85,29 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        // Employee Info
+        // Employee info
         document.getElementById('empName').textContent = data.employeeId.name;
         document.getElementById('empEmail').textContent = data.employeeId.email;
 
-        // Salary
+        // Salary structure
         document.getElementById('basic').textContent = data.salaryStructure.basic;
         document.getElementById('hra').textContent = data.salaryStructure.hra;
-        document.getElementById('allowance').textContent = data.salaryStructure.allowance;
+        document.getElementById('allowance').textContent =
+          data.salaryStructure.allowances;
 
-        // Bank
-        document.getElementById('bankName').textContent = data.bankDetails.bankName;
-        document.getElementById('accountNumber').textContent = data.bankDetails.accountNumber;
-        document.getElementById('ifscCode').textContent = data.bankDetails.ifscCode;
+        // Bank details
+        document.getElementById('bankName').textContent =
+          data.bankDetails.bankName;
+        document.getElementById('accountNumber').textContent =
+          data.bankDetails.accountNumber;
+        document.getElementById('ifscCode').textContent =
+          data.bankDetails.ifsc;
 
-        // Tax
-        document.getElementById('taxRegime').textContent = data.taxDetails.taxRegime;
-        document.getElementById('panNumber').textContent = data.taxDetails.panNumber || '-';
-
+        // Tax details
+        document.getElementById('taxRegime').textContent =
+          data.taxDetails.taxRegime;
+        document.getElementById('panNumber').textContent =
+          data.taxDetails.panNumber || '-';
       })
       .catch(err => {
         console.error(err);

@@ -11,80 +11,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Get user from localStorage
+  // ===============================
+  // AUTH CHECK (ONLY THIS IS NEEDED)
+  // ===============================
   const user = JSON.parse(localStorage.getItem('currentUser'));
   const token = localStorage.getItem('authToken');
-  
+
   if (!user || !token) {
-    window.location.href = '/pages/login.html';
+    window.location.href = '/login.html';
     return;
   }
 
-  // Get current dashboard from URL
-  const currentPath = window.location.pathname;
-  
-  // Role-based protection (checks URL + user role)
-  const roleChecks = {
-    '/superadmin/': 'Super Admin',
-    '/payroll-admin/': 'Payroll Admin', 
-    '/hr-admin/': 'HR Admin',
-    '/employee/': 'Employee',
-    '/finance/': 'Finance'
-  };
-
-  // Find which dashboard this is
-  let requiredRole = null;
-  for (const [path, role] of Object.entries(roleChecks)) {
-    if (currentPath.includes(path)) {
-      requiredRole = role;
-      break;
-    }
-  }
-
-  // If not a role dashboard, allow access (login page, etc.)
-  if (!requiredRole) {
-    initDashboard();
-    return;
-  }
-
-  // Check if user has correct role for this dashboard
-  if (user.role !== requiredRole) {
-    showToast(`Access denied. ${requiredRole} required.`, 'error');
-    setTimeout(() => {
-      window.location.href = '/pages/login.html';
-    }, 2000);
-    return;
-  }
-
-  // User has correct role → initialize dashboard
+  // ===============================
+  // INITIALIZE DASHBOARD
+  // ===============================
   initDashboard();
 
   function initDashboard() {
-    // Update user info everywhere
+    // Show user name
     document.querySelectorAll('.user-name').forEach(el => {
-      el.textContent = user.name || requiredRole;
+      el.textContent = user.name || 'User';
     });
+
+    // Show user role
     document.querySelectorAll('.user-role').forEach(el => {
       el.textContent = user.role;
     });
 
-    // User initials in header
+    // User initials
     const initialsEl = document.querySelector('.user-initials');
     if (initialsEl) {
-      const initials = user.name 
-        ? user.name.charAt(0).toUpperCase() 
-        : requiredRole.charAt(0);
+      const initials = user.name
+        ? user.name.charAt(0).toUpperCase()
+        : user.role.charAt(0).toUpperCase();
       initialsEl.textContent = initials;
     }
 
-    // Logout
+    // ===============================
+    // LOGOUT
+    // ===============================
     if (logoutBtn) {
       logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (confirm('Logout?')) {
           localStorage.removeItem('authToken');
           localStorage.removeItem('currentUser');
-          window.location.href = '/pages/login.html';
+          window.location.href = '/login.html';
         }
       });
     }

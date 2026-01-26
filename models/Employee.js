@@ -1,9 +1,20 @@
 const mongoose = require('mongoose');
+
 const employeeSchema = new mongoose.Schema({
-  employeeId: { type: String, required: true, unique: true },
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  department: String,
-  basicSalary: { type: Number, default: 0 }
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  role: {
+    type: String,
+    enum: ['employee', 'HR Admin', 'Super Admin'],
+    required: true
+  }
 }, { timestamps: true });
+
 module.exports = mongoose.model('Employee', employeeSchema);

@@ -1,28 +1,42 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');                // from routes to root/models
-const { requireAuth } = require('../middlewares/auth'); // 2 dots: root → middlewares
+const User = require('../models/User');
 
 const router = express.Router();
 
+/**
+ * POST /api/auth/login
+ */
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
     const user = await User.findOne({ email });
-    if (!user || !user.isActive) {
-      return res.status(401).json({ error: 'Invalid email or user is inactive.' });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    if (user.isActive === false) {
+      return res.status(401).json({ error: 'User is inactive' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid password.' });
+      return res.status(401).json({ error: 'Invalid email or password' });
     }
 
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role, orgId: user.orgId },
-      process.env.JWT_SECRET,
+      {
+        id: user._id,
+        role: user.role,
+        email: user.email
+      },
+      process.env.JWT_SECRET || 'secretkey',
       { expiresIn: '1d' }
     );
 
@@ -32,19 +46,14 @@ router.post('/login', async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role,
-        orgId: user.orgId
+        role: user.role
       }
     });
+
   } catch (err) {
-  console.error("LOGIN ERROR:", err);   // 👈 add this
-  res.status(500).json({ error: err.message });
-}
-
-});
-
-router.get('/me', requireAuth, (req, res) => {
-  res.json({ user: req.user });
+    console.error('LOGIN ERROR:', err);
+    res.status(500).json({ error: 'Server error during login' });
+  }
 });
 
 module.exports = router;

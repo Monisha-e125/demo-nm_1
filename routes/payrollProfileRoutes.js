@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-
 const PayrollProfile = require('../models/PayrollProfile');
 const Employee = require('../models/Employee');
 const { auth } = require('../middlewares/auth');
-
 
 /**
  * CREATE Payroll Profile
@@ -13,20 +11,21 @@ const { auth } = require('../middlewares/auth');
  */
 router.post('/', auth(['HR Admin', 'Super Admin']), async (req, res) => {
   try {
-    const {
-      employeeId,
-      salaryStructure,
-      bankDetails,
-      taxDetails
-    } = req.body;
+    if (!req.body) {
+      return res.status(400).json({ message: 'Request body is missing' });
+    }
 
-    // Check employee exists
+    const { employeeId, salaryStructure, bankDetails, taxDetails } = req.body;
+
+    if (!employeeId) {
+      return res.status(400).json({ message: 'employeeId is required' });
+    }
+
     const employee = await Employee.findById(employeeId);
     if (!employee) {
       return res.status(404).json({ message: 'Employee not found' });
     }
 
-    // Prevent duplicate payroll profile
     const existingProfile = await PayrollProfile.findOne({ employeeId });
     if (existingProfile) {
       return res.status(400).json({ message: 'Payroll profile already exists' });
@@ -51,15 +50,16 @@ router.post('/', auth(['HR Admin', 'Super Admin']), async (req, res) => {
   }
 });
 
-/**
- * GET Payroll Profile by Employee ID
- * HR Admin & Employee
- */
 router.get('/:employeeId', auth(['HR Admin', 'Employee', 'Super Admin']), async (req, res) => {
   try {
-    const payrollProfile = await PayrollProfile.findOne({
-      employeeId: req.params.employeeId
-    }).populate('employeeId', 'name email');
+    const { employeeId } = req.params;
+
+    if (!employeeId) {
+      return res.status(400).json({ message: 'employeeId parameter is required' });
+    }
+
+    const payrollProfile = await PayrollProfile.findOne({ employeeId })
+      .populate('employeeId', 'name email');
 
     if (!payrollProfile) {
       return res.status(404).json({ message: 'Payroll profile not found' });
@@ -77,8 +77,18 @@ router.get('/:employeeId', auth(['HR Admin', 'Employee', 'Super Admin']), async 
  */
 router.put('/:employeeId', auth(['HR Admin', 'Super Admin']), async (req, res) => {
   try {
+    const { employeeId } = req.params;
+
+    if (!employeeId) {
+      return res.status(400).json({ message: 'employeeId parameter is required' });
+    }
+
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ message: 'Update body is missing' });
+    }
+
     const payrollProfile = await PayrollProfile.findOneAndUpdate(
-      { employeeId: req.params.employeeId },
+      { employeeId },
       {
         ...req.body,
         updatedBy: req.user.id
