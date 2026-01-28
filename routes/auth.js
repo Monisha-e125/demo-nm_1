@@ -10,6 +10,8 @@ const router = express.Router();
  */
 router.post('/login', async (req, res) => {
   try {
+    console.log("REQ BODY:", req.body);
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -17,6 +19,8 @@ router.post('/login', async (req, res) => {
     }
 
     const user = await User.findOne({ email });
+    console.log("USER FROM DB:", user);
+
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
@@ -26,21 +30,19 @@ router.post('/login', async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log("PASSWORD MATCH:", isMatch);
+
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
     const token = jwt.sign(
-      {
-        id: user._id,
-        role: user.role,
-        email: user.email
-      },
-      process.env.JWT_SECRET || 'secretkey',
+      { id: user._id, role: user.role, email: user.email },
+      process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
 
-    res.json({
+    return res.status(200).json({
       token,
       user: {
         id: user._id,
@@ -51,8 +53,8 @@ router.post('/login', async (req, res) => {
     });
 
   } catch (err) {
-    console.error('LOGIN ERROR:', err);
-    res.status(500).json({ error: 'Server error during login' });
+    console.error("LOGIN ERROR:", err);
+    return res.status(500).json({ error: 'Server error during login' });
   }
 });
 
