@@ -5,18 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payroll Pro — Login</title>
 
-  <!-- ✅ CSS PATH (CRITICAL) -->
+  <!-- ✅ CORRECT PATHS -->
   <link rel="stylesheet" href="/css/login.css" />
-
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  />
+  
+  <!-- Font Awesome (ignore tracking warning - styling only) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
 <body>
   <div class="login-container">
-
     <!-- Header -->
     <div class="login-header">
       <div class="company-logo"></div>
@@ -24,8 +21,8 @@
       <p class="tagline">Streamline your payroll process</p>
     </div>
 
-    <!-- Form -->
-    <div class="login-form">
+    <!-- ✅ FIXED FORM - id="loginForm" + type="submit" -->
+    <form id="loginForm" class="login-form">
       <div class="login-title">
         <h2>Welcome Back</h2>
         <p>Enter your credentials to access your account</p>
@@ -38,8 +35,9 @@
           <input
             type="email"
             id="email"
-            placeholder="Enter your email"
+            placeholder="admin@company.com"
             autocomplete="email"
+            required
           />
         </div>
       </div>
@@ -51,23 +49,26 @@
           <input
             type="password"
             id="password"
-            placeholder="Enter your password"
+            placeholder="admin@123#"
             autocomplete="current-password"
+            required
           />
         </div>
       </div>
 
-      <button id="loginBtn" class="login-button">Login</button>
-    </div>
+      <!-- ✅ FIXED: type="submit" (login.js expects this) -->
+      <button type="submit" class="login-button">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+    </form>
 
     <!-- Footer -->
     <div class="login-footer">
       Payroll Pro — A reliable payroll system
     </div>
-
   </div>
 
-  <!-- JS -->
+  <!-- ✅ CORRECT JS PATH -->
   <script src="/js/login.js"></script>
 </body>
 </html>

@@ -8,32 +8,32 @@ const testUsers = [
   {
     name: 'Super Admin',
     email: 'admin@company.com',
-    role: 'Super Admin',
-    password: 'password123'
+    password: 'admin@123#',
+    role: 'Super Admin'
   },
   {
     name: 'Payroll Admin',
-    email: 'payroll@company.com', 
-    role: 'Payroll Admin',
-    password: 'password123'
+    email: 'payroll@company.com',
+    password: 'payroll@123#',
+    role: 'Payroll Admin'
   },
   {
     name: 'HR Admin',
     email: 'hr@company.com',
-    role: 'HR Admin',
-    password: 'password123'
+    password: 'hr@123#',
+    role: 'HR Admin'
   },
   {
-    name: 'Finance Admin',
+    name: 'Finance',
     email: 'finance@company.com',
-    role: 'Finance',
-    password: 'password123'
+    password: 'finance@123#',
+    role: 'Finance'
   },
   {
-    name: 'Test Employee',
+    name: 'Employee',
     email: 'employee@company.com',
-    role: 'Employee',
-    password: 'password123'
+    password: 'employee@123#',
+    role: 'Employee'
   }
 ];
 
@@ -49,7 +49,7 @@ async function createAllTestUsers() {
     console.log('Cleared existing test users');
 
     // Hash password (same for all)
-    const hashedPassword = await bcrypt.hash('password123', 10);
+    const hashedPassword = await bcrypt.hash('password@123#', 10);
 
     // Create all users
     const users = testUsers.map(user => ({
