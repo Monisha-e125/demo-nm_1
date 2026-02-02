@@ -1,7 +1,8 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-// ✅ YOUR EXACT 5 USERS (plain text - no bcrypt crash)
+// USERS (plain text for demo)
 const users = [
   { id: '1', name: 'Super Admin', email: 'admin@company.com', password: 'admin@123#', role: 'super_admin', isActive: true },
   { id: '2', name: 'Payroll Admin', email: 'payroll@company.com', password: 'payroll@123#', role: 'payroll_admin', isActive: true },
@@ -10,35 +11,42 @@ const users = [
   { id: '5', name: 'Employee', email: 'employee@company.com', password: 'employee@123#', role: 'employee', isActive: true }
 ];
 
-// 🛡️ BULLETPROOF LOGIN (no crashes)
 router.post('/login', (req, res) => {
   try {
-    console.log('🔐 LOGIN REQUEST:', req.body);
-    
+    console.log('LOGIN REQUEST:', req.body);
+
     const { email, password } = req.body;
-    
+
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password required' });
     }
-    
-    // 🔍 Find user
-    const user = users.find(u => u.email === email && u.password === password);
-    
-    console.log('👤 USER FOUND:', user ? user.name : 'No match');
-    
+
+    const user = users.find(
+      u => u.email === email && u.password === password
+    );
+
+    console.log('USER FOUND:', user ? user.name : 'No match');
+
     if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-    
+
     if (!user.isActive) {
       return res.status(401).json({ error: 'Account inactive' });
     }
-    
-    // ✅ JWT (safe)
-    const token = 'fake-jwt-token-' + Date.now(); // Simplified
-    
-    console.log('✅ LOGIN SUCCESS:', user.role);
-    
+
+    // REAL JWT WITH EXPIRY
+    const token = jwt.sign(
+      {
+        id: user.id,
+        role: user.role
+      },
+      process.env.JWT_SECRET || 'dev_secret_key',
+      { expiresIn: '1h' }
+    );
+
+    console.log('LOGIN SUCCESS:', user.role);
+
     res.json({
       success: true,
       token,
@@ -49,9 +57,9 @@ router.post('/login', (req, res) => {
         role: user.role
       }
     });
-    
+
   } catch (error) {
-    console.error('💥 CRASH PREVENTED:', error.message);
+    console.error('LOGIN ERROR:', error.message);
     res.status(500).json({ error: 'Login failed' });
   }
 });

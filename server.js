@@ -34,7 +34,7 @@ app.use('/api/salary', salaryRoutes);
 
 /* -------------------- ROOT ROUTE -------------------- */
 app.get('/', (req, res) => {
-  res.redirect('/pages/login.html');
+  res.redirect('/login.html');
 });
 
 /* -------------------- 404 HANDLER -------------------- */

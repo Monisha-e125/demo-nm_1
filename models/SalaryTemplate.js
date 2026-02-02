@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 
-const salaryTemplateSchema = new mongoose.Schema(
+const SalaryTemplateSchema = new mongoose.Schema(
   {
     templateName: {
       type: String,
       required: true,
     },
-
     components: [
       {
         componentId: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "SalaryComponent",
+          required: true,
         },
       },
     ],
@@ -19,4 +19,4 @@ const salaryTemplateSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("SalaryTemplate", salaryTemplateSchema);
+module.exports = mongoose.model("SalaryTemplate", SalaryTemplateSchema);

@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f6fa;
+  padding: 30px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.salary-form {
+  background: #ffffff;
+  padding: 20px;
+  width: 300px;
+  border-radius: 4px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 8px;
+  background-color: #2f80ed;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.salary-result {
+  margin-top: 20px;
+  background: #ffffff;
+  padding: 15px;
+  width: 300px;
+  border-radius: 4px;
+}

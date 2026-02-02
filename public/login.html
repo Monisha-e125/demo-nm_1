@@ -5,11 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payroll Pro — Login</title>
 
-  <!-- ✅ CORRECT PATHS -->
+  <!-- Styles -->
   <link rel="stylesheet" href="/css/login.css" />
-  
-  <!-- Font Awesome (ignore tracking warning - styling only) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
 </head>
 
 <body>
@@ -21,7 +24,7 @@
       <p class="tagline">Streamline your payroll process</p>
     </div>
 
-    <!-- ✅ FIXED FORM - id="loginForm" + type="submit" -->
+    <!-- Login Form -->
     <form id="loginForm" class="login-form">
       <div class="login-title">
         <h2>Welcome Back</h2>
@@ -35,7 +38,7 @@
           <input
             type="email"
             id="email"
-            placeholder="admin@company.com"
+            placeholder="email"
             autocomplete="email"
             required
           />
@@ -49,14 +52,13 @@
           <input
             type="password"
             id="password"
-            placeholder="admin@123#"
+            placeholder="password"
             autocomplete="current-password"
             required
           />
         </div>
       </div>
 
-      <!-- ✅ FIXED: type="submit" (login.js expects this) -->
       <button type="submit" class="login-button">
         <i class="fas fa-sign-in-alt"></i> Login
       </button>
@@ -68,7 +70,7 @@
     </div>
   </div>
 
-  <!-- ✅ CORRECT JS PATH -->
+  <!-- Login Script -->
   <script src="/js/login.js"></script>
 </body>
 </html>

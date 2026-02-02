@@ -19,7 +19,7 @@ exports.createComponent = async (req, res) => {
 exports.getComponents = async (req, res) => {
   try {
     const components = await SalaryComponent.find();
-    res.json(components);
+    res.status(200).json(components);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -45,7 +45,7 @@ exports.getTemplates = async (req, res) => {
     const templates = await SalaryTemplate.find().populate(
       "components.componentId"
     );
-    res.json(templates);
+    res.status(200).json(templates);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -53,6 +53,7 @@ exports.getTemplates = async (req, res) => {
 
 /**
  * CALCULATE Salary from Template
+ * Route: GET /calculate/:id
  */
 exports.calculateSalary = async (req, res) => {
   try {
@@ -67,17 +68,17 @@ exports.calculateSalary = async (req, res) => {
     let grossSalary = 0;
     let totalDeductions = 0;
 
-    template.components.forEach((c) => {
-      if (c.componentId.type === "Earning") {
-        grossSalary += c.componentId.amount;
+    template.components.forEach((item) => {
+      if (item.componentId.type === "Earning") {
+        grossSalary += item.componentId.amount;
       } else {
-        totalDeductions += c.componentId.amount;
+        totalDeductions += item.componentId.amount;
       }
     });
 
     const netSalary = grossSalary - totalDeductions;
 
-    res.json({
+    res.status(200).json({
       templateName: template.templateName,
       grossSalary,
       totalDeductions,

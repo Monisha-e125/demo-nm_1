@@ -1,18 +1,16 @@
 const mongoose = require("mongoose");
 
-const salaryComponentSchema = new mongoose.Schema(
+const SalaryComponentSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
     },
-
     type: {
       type: String,
       enum: ["Earning", "Deduction"],
       required: true,
     },
-
     amount: {
       type: Number,
       required: true,
@@ -21,4 +19,4 @@ const salaryComponentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("SalaryComponent", salaryComponentSchema);
+module.exports = mongoose.model("SalaryComponent", SalaryComponentSchema);

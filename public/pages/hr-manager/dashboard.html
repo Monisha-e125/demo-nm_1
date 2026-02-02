@@ -4,10 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payroll Pro — HR Admin</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="/css/dashboard.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
 </head>
 <body>
+
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
@@ -16,30 +22,37 @@
     </div>
 
     <div class="sidebar-menu">
-      <a href="#" class="menu-item active">
+      <a href="dashboard.html" class="menu-item active">
         <i class="fas fa-tachometer-alt"></i> Dashboard
       </a>
-      <a href="#" class="menu-item">
+
+      <a href="employees.html" class="menu-item">
         <i class="fas fa-users"></i> Employees
       </a>
-      <a href="#" class="menu-item">
-        <i class="fas fa-calendar-alt"></i> Attendance
+
+      <a href="attendance.html" class="menu-item">
+        <i class="fas fa-calendar-check"></i> Attendance
       </a>
-      <a href="#" class="menu-item">
+
+      <a href="leave.html" class="menu-item">
         <i class="fas fa-umbrella-beach"></i> Leave Management
       </a>
-      <a href="#" class="menu-item">
-        <i class="fas fa-file-alt"></i> HR Reports
+
+      <!-- MODULE 4 LINK -->
+      <a href="payroll-profile.html" class="menu-item">
+        <i class="fas fa-money-check-alt"></i> Payroll Profile
       </a>
-      <a href="#" class="menu-item">
-        <i class="fas fa-file-contract"></i> Documents & Policies
+
+      <a href="reports.html" class="menu-item">
+        <i class="fas fa-chart-bar"></i> HR Reports
+      </a>
+
+      <a href="documents.html" class="menu-item">
+        <i class="fas fa-file-alt"></i> Documents & Policies
       </a>
     </div>
 
     <div class="sidebar-footer">
-      <div class="user-info">
-        
-      </div>
       <button id="logoutBtn" class="logout-btn">
         <i class="fas fa-sign-out-alt"></i> Logout
       </button>
@@ -49,68 +62,63 @@
   <!-- Main Content -->
   <div class="main-content">
     <header class="top-header">
-      <div class="header-left">
-        <h1>HR Admin Dashboard</h1>
-        <p>Manage employees, attendance, leave, and HR policies.</p>
-      </div>
-      <div class="header-right">
-        <div class="user-badge">
-          <span class="user-initials">HR</span>
-          <div class="user-info">
-            
-          </div>
-        </div>
-      </div>
+      <h1>HR Admin Dashboard</h1>
+      <p>Manage employees, attendance, leave, and payroll profiles.</p>
     </header>
 
+    <!-- Dashboard Cards -->
     <div class="content">
       <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon emp-icon"><i class="fas fa-users"></i></div>
+
+        <!-- Employees -->
+        <a href="employees.html" class="stat-card">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
           <div class="stat-info">
             <h3>Employees</h3>
-            <p>Add, update, view employees and their profiles</p>
+            <p>Add, update, view employees</p>
           </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon att-icon"><i class="fas fa-calendar-alt"></i></div>
+        </a>
+
+        <!-- Attendance -->
+        <a href="attendance.html" class="stat-card">
+          <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
           <div class="stat-info">
             <h3>Attendance</h3>
-            <p>Manage attendance, sanctions, and attendance reports</p>
+            <p>Manage attendance records</p>
           </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon leave-icon"><i class="fas fa-umbrella-beach"></i></div>
+        </a>
+
+        <!-- Leave -->
+        <a href="leave.html" class="stat-card">
+          <div class="stat-icon"><i class="fas fa-umbrella-beach"></i></div>
           <div class="stat-info">
             <h3>Leave Management</h3>
-            <p>Manage leaves, balance, encashment, and approvals</p>
+            <p>Approve and manage leaves</p>
           </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon doc-icon"><i class="fas fa-file-contract"></i></div>
-          <div class="stat-info">
-            <h3>Documents & Policies</h3>
-            <p>Upload, manage, and distribute company policies</p>
-          </div>
-        </div>
-      </div>
+        </a>
 
-      <div class="quick-actions">
-        <h2>Quick Actions</h2>
-        <div class="actions-grid">
-          <button class="action-btn">Add New Employee</button>
-          <button class="action-btn">Update Attendance</button>
-          <button class="action-btn">Approve Leaves</button>
-          <button class="action-btn">View HR Reports</button>
-          <button class="action-btn">Upload Policy</button>
-          <button class="action-btn">Send Notifications</button>
-        </div>
+        <!-- ✅ MODULE 4 CARD -->
+        <a href="payroll-profile.html" class="stat-card">
+          <div class="stat-icon"><i class="fas fa-money-check-alt"></i></div>
+          <div class="stat-info">
+            <h3>Payroll Profile</h3>
+            <p>Salary structure & net salary calculation</p>
+          </div>
+        </a>
+
       </div>
     </div>
   </div>
 
-  <div id="toast-message" class="toast hidden"></div>
+  <!-- JS -->
   <script src="/js/dashboard.js"></script>
+
+  <script>
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.clear();
+      window.location.href = "/login.html";
+    });
+  </script>
+
 </body>
 </html>
-

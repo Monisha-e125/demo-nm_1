@@ -1,148 +1,109 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const logoutBtn = document.getElementById('logoutBtn');
-  const toast = document.getElementById('toast-message');
+document.addEventListener("DOMContentLoaded", () => {
+  // -------------------- AUTH CHECK --------------------
+  const token = localStorage.getItem("authToken");
+  const userStr = localStorage.getItem("currentUser");
 
-  // 1. Toast notifications
-  const showToast = (message, type = 'error') => {
-    if (!toast) return;
-    toast.textContent = message;
-    toast.className = `toast ${type}`;
-    toast.classList.remove('hidden');
-    setTimeout(() => toast.classList.add('hidden'), 4000);
-  };
-
-  // 2. Logout function
-  const logoutUser = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('refreshToken'); // If using refresh tokens
-    showToast('Logged out successfully', 'success');
-    setTimeout(() => {
-      window.location.href = '/pages/login.html';
-    }, 1500);
-  };
-
-  // 3. Token expiry check
-  const checkTokenExpiry = () => {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      logoutUser();
-      return false;
-    }
-
-    try {
-      // Decode JWT payload (client-side expiry check)
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      if (payload.exp * 1000 < Date.now()) {
-        console.log('Token expired → auto-logout');
-        logoutUser();
-        return false;
-      }
-      return true;
-    } catch (e) {
-      console.error('Invalid token:', e);
-      logoutUser();
-      return false;
-    }
-  };
-
-  // 4. Role-based dashboard protection
-  const protectDashboard = () => {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    const token = localStorage.getItem('authToken');
-    
-    // No token/user → logout
-    if (!user || !token || !checkTokenExpiry()) {
-      return false;
-    }
-
-    // Get current dashboard from URL
-    const currentPath = window.location.pathname;
-    const roleChecks = {
-      '/superadmin/': 'Super Admin',
-      '/payroll-admin/': 'Payroll Admin',
-      '/hr-admin/': 'HR Admin',
-      '/employee/': 'Employee',
-      '/finance/': 'Finance'
-    };
-
-    // Check if this is a role-protected dashboard
-    for (const [path, requiredRole] of Object.entries(roleChecks)) {
-      if (currentPath.includes(path)) {
-        if (user.role !== requiredRole) {
-          showToast(`Access denied. ${requiredRole} role required.`);
-          setTimeout(logoutUser, 2000);
-          return false;
-        }
-        return { user, requiredRole };
-      }
-    }
-
-    // Non-protected pages (login, etc.) → allow
-    return { user };
-  };
-
-  // 5. Initialize dashboard UI
-  const initDashboard = (user) => {
-    // Update user info in header/sidebar
-    document.querySelectorAll('.user-name').forEach(el => {
-      el.textContent = user.name || user.role;
-    });
-    document.querySelectorAll('.user-role').forEach(el => {
-      el.textContent = user.role;
-    });
-
-    // Update user initials
-    const initialsEl = document.querySelector('.user-initials');
-    if (initialsEl) {
-      const initials = user.name ? user.name.charAt(0).toUpperCase() : user.role.charAt(0);
-      initialsEl.textContent = initials;
-    }
-
-    // Logout button
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (confirm('Are you sure you want to logout?')) {
-          logoutUser();
-        }
-      });
-    }
-
-    // Page loaded successfully
-    console.log(`✅ ${user.role} dashboard loaded`);
-  };
-
-  // 6. MAIN EXECUTION
-  const authResult = protectDashboard();
-  if (!authResult) {
-    return; // User unauthorized → already handled
+  if (!token || !userStr) {
+    redirectToLogin();
+    return;
   }
 
-  initDashboard(authResult.user);
+  let user;
+  try {
+    user = JSON.parse(userStr);
+  } catch (e) {
+    clearSession();
+    return;
+  }
 
-  // 7. Auto token expiry check (every 5 minutes)
-  setInterval(checkTokenExpiry, 5 * 60 * 1000);
+  const role = normalizeRole(user.role);
+  console.log("Dashboard loaded for role:", role);
 
-  // 8. API wrapper with auto-refresh (future-proof)
-  window.apiCall = async (url, options = {}) => {
-    let token = localStorage.getItem('authToken');
-    
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        ...options.headers,
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
+  // -------------------- ROLE-BASED INIT --------------------
+  switch (role) {
+    case "super_admin":
+      initSuperAdmin();
+      break;
+
+    case "payroll_admin":
+      initPayrollAdmin();
+      break;
+
+    case "hr_admin":
+    case "hr_manager":
+      initHRAdmin();
+      break;
+
+    case "employee":
+      initEmployee();
+      break;
+
+    default:
+      console.warn("Unknown role:", role);
+      clearSession();
+      return;
+  }
+
+  // -------------------- LOGOUT --------------------
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      clearSession();
     });
+  }
 
-    if (response.status === 401) {
-      // Token expired → logout (refresh token logic can be added later)
-      logoutUser();
-      throw new Error('Session expired');
+  // ==================== FUNCTIONS ====================
+
+  function initSuperAdmin() {
+    console.log("Init Super Admin dashboard");
+
+    // IMPORTANT:
+    // Do NOT auto-call restricted APIs on page load
+    // Call them only on user action (button click)
+
+    // Example: bind click if needed
+    const statutoryCard = document.querySelector(
+      ".stat-card[onclick*='statutory']"
+    );
+
+    if (statutoryCard) {
+      statutoryCard.addEventListener("click", () => {
+        window.location.href = "statutory.html";
+      });
     }
+  }
 
-    return response;
-  };
+  function initPayrollAdmin() {
+    console.log("Init Payroll Admin dashboard");
+
+    // Payroll Admin should NOT call statutory / org APIs
+    // Keep dashboard UI-only for now
+  }
+
+  function initHRAdmin() {
+    console.log("Init HR Admin dashboard");
+
+    // HR-specific lightweight init
+  }
+
+  function initEmployee() {
+    console.log("Init Employee dashboard");
+  }
+
+  function normalizeRole(role) {
+    return role
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "_");
+  }
+
+  function clearSession() {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("currentUser");
+    window.location.href = "/login.html";
+  }
+
+  function redirectToLogin() {
+    window.location.href = "/login.html";
+  }
 });

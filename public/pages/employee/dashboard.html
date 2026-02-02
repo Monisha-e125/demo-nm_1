@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payroll Pro — Employee</title>
 
-  <!-- Main Dashboard CSS -->
   <link rel="stylesheet" href="/css/dashboard.css">
 
-  <!-- Font Awesome Icons -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -24,42 +22,38 @@
     </div>
 
     <div class="sidebar-menu">
-      <a href="#" class="menu-item active">
+      <a href="#" class="menu-item active" id="menuDashboard">
         <i class="fas fa-tachometer-alt"></i>
         <span>Dashboard</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" id="menuPayslips">
         <i class="fas fa-file-invoice-dollar"></i>
         <span>Payslips</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" id="menuLeave">
         <i class="fas fa-umbrella-beach"></i>
         <span>Leave</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" id="menuAttendance">
         <i class="fas fa-calendar-alt"></i>
         <span>Attendance</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" id="menuProfile">
         <i class="fas fa-user"></i>
         <span>Profile</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" id="menuNotifications">
         <i class="fas fa-bell"></i>
         <span>Notifications</span>
       </a>
     </div>
 
     <div class="sidebar-footer">
-      <div class="user-info">
-        
-      </div>
-
       <button id="logoutBtn" class="logout-btn">
         <i class="fas fa-sign-out-alt"></i> Logout
       </button>
@@ -73,21 +67,13 @@
         <h1>Employee Dashboard</h1>
         <p>View your salary, leaves, attendance, and personal details.</p>
       </div>
-
-      <div class="header-right">
-        <div class="user-badge">
-          <span class="user-initials">E</span>
-          <div class="user-info">
-            
-          </div>
-        </div>
-      </div>
     </header>
 
     <div class="content">
       <!-- Stats -->
       <div class="stats-grid">
-        <div class="stat-card">
+
+        <div class="stat-card" id="cardPayslip">
           <div class="stat-icon slip-icon">
             <i class="fas fa-file-invoice-dollar"></i>
           </div>
@@ -97,7 +83,7 @@
           </div>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card" id="cardLeave">
           <div class="stat-icon leave-icon">
             <i class="fas fa-umbrella-beach"></i>
           </div>
@@ -107,7 +93,7 @@
           </div>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card" id="cardAttendance">
           <div class="stat-icon att-icon">
             <i class="fas fa-calendar-alt"></i>
           </div>
@@ -117,7 +103,7 @@
           </div>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card" id="cardProfile">
           <div class="stat-icon profile-icon">
             <i class="fas fa-user"></i>
           </div>
@@ -126,27 +112,24 @@
             <p>Update personal and bank details</p>
           </div>
         </div>
+
       </div>
 
       <!-- Quick Actions -->
       <div class="quick-actions">
         <h2>Quick Actions</h2>
         <div class="actions-grid">
-          <button class="action-btn">View Payslip</button>
-          <button class="action-btn">Download Payslip</button>
-          <button class="action-btn">Apply Leave</button>
-          <button class="action-btn">Leave Status</button>
-          <button class="action-btn">Update Profile</button>
-          <button class="action-btn">Notifications</button>
+          <button class="action-btn" id="btnViewPayslip">View Payslip</button>
+          <button class="action-btn" id="btnDownloadPayslip">Download Payslip</button>
+          <button class="action-btn" id="btnApplyLeave">Apply Leave</button>
+          <button class="action-btn" id="btnLeaveStatus">Leave Status</button>
+          <button class="action-btn" id="btnUpdateProfile">Update Profile</button>
+          <button class="action-btn" id="btnNotifications">Notifications</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast -->
-  <div id="toast-message" class="toast hidden"></div>
-
-  <!-- Common Dashboard JS -->
-  <script src="/js/dashboard.js"></script>
+  <script src="/js/employee-dashboard.js"></script>
 </body>
 </html>
