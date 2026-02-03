@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Employee (HR)</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+
+<style>
+* {margin:0;padding:0;box-sizing:border-box;}
+body {
+  font-family: Arial, sans-serif;
+  background:#f5f7fa;
+  display:flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width:250px;
+  background:#1e3a8a;
+  color:white;
+  padding:20px;
+  height:100vh;
+}
+.logo {
+  font-size:24px;
+  font-weight:bold;
+  margin-bottom:30px;
+}
+.menu-item {
+  display:block;
+  padding:12px 15px;
+  color:#bfdbfe;
+  text-decoration:none;
+  margin:8px 0;
+  border-radius:8px;
+}
+.menu-item.active {
+  background:#3b82f6;
+}
+
+/* Main Content */
+.main-content {
+  flex:1;
+  padding:30px;
+  overflow:auto;
+}
+
+.top-header {
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  margin-bottom:25px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.form-card {
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  max-width:900px;
+}
+
+/* Grid Layout */
+.form-grid {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:20px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+/* Inputs */
+label {
+  display:block;
+  font-size:13px;
+  color:#475569;
+  margin-bottom:6px;
+}
+
+input {
+  width:100%;
+  padding:10px;
+  border:1px solid #e2e8f0;
+  border-radius:8px;
+  font-size:14px;
+}
+
+/* Button */
+.primary-btn {
+  margin-top:20px;
+  padding:12px 20px;
+  border:none;
+  background:#3b82f6;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.primary-btn:hover {
+  background:#2563eb;
+}
+
+/* Message */
+#msg {
+  margin-top:10px;
+  font-size:14px;
+}
+
+/* Back Link */
+.back-link {
+  display:inline-block;
+  margin-bottom:15px;
+  color:#3b82f6;
+  text-decoration:none;
+  font-size:14px;
+}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="logo">Payroll Pro</div>
+  <a href="employees.html" class="menu-item"><i class="fas fa-users"></i> Employees</a>
+  <a href="../dashboard.html" class="menu-item"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+
+  <div class="top-header">
+    <h1><i class="fas fa-user-plus"></i> Add Employee</h1>
+    <p>Create a new employee profile</p>
+  </div>
+
+  <a href="employees.html" class="back-link">
+    <i class="fas fa-arrow-left"></i> Back to Employees
+  </a>
+
+  <div class="form-card">
+    <h3 style="margin-bottom:15px;">Employee Details</h3>
+
+    <div class="form-grid">
+
+      <div>
+        <label>Employee ID</label>
+        <input id="empId" placeholder="EMP001">
+      </div>
+
+      <div>
+        <label>Name</label>
+        <input id="name" placeholder="Santhosh">
+      </div>
+
+      <div>
+        <label>Department</label>
+        <input id="dept" placeholder="HR">
+      </div>
+
+      <div>
+        <label>Designation</label>
+        <input id="desig" placeholder="Developer">
+      </div>
+
+      <div>
+        <label>Email</label>
+        <input id="email" type="email" placeholder="santhosh@example.com">
+      </div>
+
+      <div>
+        <label>Joining Date</label>
+        <input id="joinDate" type="date">
+      </div>
+
+      <div class="full-width">
+        <button class="primary-btn" onclick="addEmployee()">
+          <i class="fas fa-save"></i> Add Employee
+        </button>
+        <p id="msg"></p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="../../js/add-employee.js"></script>
+</body>
+</html>

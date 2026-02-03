@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Attendance & Payroll</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+
+<style>
+* {margin:0;padding:0;box-sizing:border-box;}
+body {
+  font-family: Arial, sans-serif;
+  background:#f5f7fa;
+  display:flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width:250px;
+  background:#1e3a8a;
+  color:white;
+  padding:20px;
+  height:100vh;
+}
+.logo {
+  font-size:24px;
+  font-weight:bold;
+  margin-bottom:30px;
+}
+.menu-item {
+  display:block;
+  padding:12px 15px;
+  color:#bfdbfe;
+  text-decoration:none;
+  margin:8px 0;
+  border-radius:8px;
+}
+.menu-item.active {
+  background:#3b82f6;
+}
+
+/* Main Content */
+.main-content {
+  flex:1;
+  padding:30px;
+  overflow:auto;
+}
+
+.top-header {
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  margin-bottom:25px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Cards */
+.card {
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+  margin-bottom:12px;
+}
+
+/* Grid layout */
+.form-grid {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:15px;
+}
+
+/* Inputs */
+label {
+  display:block;
+  font-size:13px;
+  color:#475569;
+  margin-bottom:5px;
+}
+
+input, select {
+  width:100%;
+  padding:10px;
+  border:1px solid #e2e8f0;
+  border-radius:8px;
+  font-size:14px;
+}
+
+/* Buttons */
+.primary-btn {
+  margin-top:10px;
+  padding:10px 15px;
+  border:none;
+  background:#3b82f6;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.primary-btn:hover {
+  background:#2563eb;
+}
+
+/* Table */
+table {
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+th {
+  background:#f8fafc;
+  padding:12px;
+  text-align:left;
+}
+td {
+  padding:12px;
+  border-bottom:1px solid #e2e8f0;
+}
+
+/* Result box */
+.result-box {
+  margin-top:15px;
+  padding:15px;
+  background:#f1f5f9;
+  border-radius:8px;
+}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="logo">Payroll Pro</div>
+  <a href="attendance.html" class="menu-item active">
+    <i class="fas fa-calendar-check"></i> Attendance
+  </a>
+  <a href="employees.html" class="menu-item">
+    <i class="fas fa-users"></i> Employees
+  </a>
+  <a href="../dashboard.html" class="menu-item">
+    <i class="fas fa-tachometer-alt"></i> Dashboard
+  </a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+
+  <div class="top-header">
+    <h1><i class="fas fa-calendar-check"></i> Module 5 — Attendance & Leave Integration</h1>
+  </div>
+
+  <!-- MARK ATTENDANCE -->
+  <div class="card">
+    <h3>Mark Attendance</h3>
+
+    <div class="form-grid">
+      <div>
+        <label>Employee ID</label>
+        <input id="empId" placeholder="EMP001">
+      </div>
+
+      <div>
+        <label>Date</label>
+        <input id="date" type="date">
+      </div>
+
+      <div>
+        <label>Status</label>
+        <select id="status">
+          <option value="P">Present</option>
+          <option value="A">Absent</option>
+          <option value="L">Leave</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Leave Type</label>
+        <select id="leaveType" style="display:none;">
+          <option value="PAID">Paid Leave</option>
+          <option value="UNPAID">Unpaid Leave</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Overtime Hours</label>
+        <input id="overtime" type="number" placeholder="0">
+      </div>
+    </div>
+
+    <button class="primary-btn" onclick="markAttendance()">Mark Attendance</button>
+    <p id="markMsg"></p>
+  </div>
+
+  <!-- VIEW ATTENDANCE -->
+  <div class="card">
+    <h3>View Attendance (Month-wise)</h3>
+
+    <div class="form-grid">
+      <div>
+        <label>Employee ID</label>
+        <input id="viewEmpId" placeholder="EMP001">
+      </div>
+
+      <div>
+        <label>Month</label>
+        <input id="viewMonth" type="number" placeholder="1-12">
+      </div>
+
+      <div>
+        <label>Year</label>
+        <input id="viewYear" type="number" placeholder="2026">
+      </div>
+    </div>
+
+    <button class="primary-btn" onclick="getAttendance()">Get Attendance</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Leave Type</th>
+          <th>Overtime</th>
+          <th>Locked</th>
+        </tr>
+      </thead>
+      <tbody id="attendanceTable"></tbody>
+    </table>
+  </div>
+
+  <!-- CALCULATE SALARY -->
+  <div class="card">
+    <h3>Calculate Salary</h3>
+
+    <div class="form-grid">
+      <div>
+        <label>Employee ID</label>
+        <input id="calcEmpId" placeholder="EMP001">
+      </div>
+
+      <div>
+        <label>Month</label>
+        <input id="calcMonth" type="number" placeholder="1-12">
+      </div>
+
+      <div>
+        <label>Year</label>
+        <input id="calcYear" type="number" placeholder="2026">
+      </div>
+
+      <div>
+        <label>Overtime Rate</label>
+        <input id="otRate" type="number" placeholder="200">
+      </div>
+    </div>
+
+    <button class="primary-btn" onclick="calculateSalary()">Calculate Salary</button>
+
+    <div id="salaryResult" class="result-box"></div>
+  </div>
+
+  <!-- LOCK PAYROLL -->
+  <div class="card">
+    <h3>Lock Payroll</h3>
+
+    <div class="form-grid">
+      <div>
+        <label>Employee ID</label>
+        <input id="lockEmpId" placeholder="EMP001">
+      </div>
+
+      <div>
+        <label>Month</label>
+        <input id="lockMonth" type="number" placeholder="1-12">
+      </div>
+
+      <div>
+        <label>Year</label>
+        <input id="lockYear" type="number" placeholder="2026">
+      </div>
+    </div>
+
+    <button class="primary-btn" onclick="lockPayroll()">Lock Payroll</button>
+    <p id="lockMsg"></p>
+  </div>
+
+</div>
+
+<script src="../../js/attendance.js"></script>
+</body>
+</html>
