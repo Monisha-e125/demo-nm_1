@@ -16,12 +16,16 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['Super Admin', 'HR Admin', 'Payroll Admin', 'Finance', 'Employee'],
-    default: 'Employee'
+    enum: ['SUPER_ADMIN', 'HR_ADMIN', 'PAYROLL_ADMIN', 'FINANCE_ADMIN', 'EMPLOYEE'],
+    default: 'EMPLOYEE'
   },
   isActive: {
     type: Boolean,
     default: true
+  },
+  organizationId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Organization'
   }
 }, { timestamps: true });
 

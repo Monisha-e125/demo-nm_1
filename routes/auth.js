@@ -1,6 +1,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const User = require('../models/User');
+
 
 // USERS (plain text for demo)
 const users = [
@@ -11,7 +13,7 @@ const users = [
   { id: '5', name: 'Employee', email: 'employee@company.com', password: 'employee@123#', role: 'employee', isActive: true }
 ];
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     console.log('LOGIN REQUEST:', req.body);
 
@@ -21,13 +23,14 @@ router.post('/login', (req, res) => {
       return res.status(400).json({ error: 'Email and password required' });
     }
 
-    const user = users.find(
-      u => u.email === email && u.password === password
-    );
+    // Find user in MongoDB (case-insensitive email)
+    const user = await User.findOne({
+      email: { $regex: new RegExp(`^${email}$`, 'i') }
+    });
 
     console.log('USER FOUND:', user ? user.name : 'No match');
 
-    if (!user) {
+    if (!user || user.password !== password) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
@@ -35,10 +38,10 @@ router.post('/login', (req, res) => {
       return res.status(401).json({ error: 'Account inactive' });
     }
 
-    // REAL JWT WITH EXPIRY
+    // Generate JWT token
     const token = jwt.sign(
       {
-        id: user.id,
+        id: user._id,
         role: user.role
       },
       process.env.JWT_SECRET || 'dev_secret_key',
@@ -51,10 +54,11 @@ router.post('/login', (req, res) => {
       success: true,
       token,
       user: {
-        id: user.id,
+        id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        organizationId: user.organizationId
       }
     });
 

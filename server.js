@@ -23,19 +23,23 @@ app.use('/api/auth', require('./routes/auth'));
 
 // Statutory routes
 app.use('/api/statutory', require('./routes/statutoryRoutes'));
-
+const organizationRoutes = require('./routes/organizationRoutes');
+app.use('/api/organization', organizationRoutes);
 // Module 3: Employee Payroll Profile
 const payrollProfileRoutes = require('./routes/payrollProfileRoutes');
 app.use('/api/payroll-profile', payrollProfileRoutes);
 
 // Module 4: Salary Structure & Calculation
 const salaryRoutes = require('./routes/salaryRoutes');
+
 app.use('/api/salary', salaryRoutes);
 // Module 5: Attendance & Leave Integration
 const attendanceRoutes = require('./routes/attendanceRoutes');
 app.use('/api/attendance', attendanceRoutes);
 const employeeRoutes = require("./routes/employeeRoutes");
 app.use("/api/employee", employeeRoutes);
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/users', userRoutes);
 
 
 /* -------------------- ROOT ROUTE -------------------- */
